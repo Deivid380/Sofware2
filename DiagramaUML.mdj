@@ -65,7 +65,7 @@
 											"top": 46,
 											"width": 495,
 											"height": 13,
-											"text": "poli.edu.co.pasaportes.modelo"
+											"text": "co.edu.poli.modelo"
 										},
 										{
 											"_type": "LabelView",
@@ -188,7 +188,7 @@
 											"top": 192,
 											"width": 215.33154296875,
 											"height": 13,
-											"text": "(from poli.edu.co.pasaportes.modelo)"
+											"text": "(from co.edu.poli.modelo)"
 										},
 										{
 											"_type": "LabelView",
@@ -448,7 +448,7 @@
 											"top": 64,
 											"width": 215.33154296875,
 											"height": 13,
-											"text": "(from poli.edu.co.pasaportes.modelo)"
+											"text": "(from co.edu.poli.modelo)"
 										},
 										{
 											"_type": "LabelView",
@@ -708,7 +708,7 @@
 											"top": -128,
 											"width": 215.33154296875,
 											"height": 13,
-											"text": "(from poli.edu.co.pasaportes.modelo)"
+											"text": "(from co.edu.poli.modelo)"
 										},
 										{
 											"_type": "LabelView",
@@ -932,7 +932,7 @@
 											"top": -16,
 											"width": 215.33154296875,
 											"height": 13,
-											"text": "(from poli.edu.co.pasaportes.modelo)"
+											"text": "(from co.edu.poli.modelo)"
 										},
 										{
 											"_type": "LabelView",
@@ -1174,7 +1174,7 @@
 											"top": -96,
 											"width": 215.33154296875,
 											"height": 13,
-											"text": "(from poli.edu.co.pasaportes.modelo)"
+											"text": "(from co.edu.poli.modelo)"
 										},
 										{
 											"_type": "LabelView",
@@ -1840,9 +1840,9 @@
 									},
 									"font": "Arial;13;0",
 									"parentStyle": false,
-									"left": 128,
+									"left": 127,
 									"top": 323,
-									"width": 5.05908203125,
+									"width": 6.5,
 									"height": 13,
 									"alpha": 0.5235987755982988,
 									"distance": 25,
@@ -2063,9 +2063,9 @@
 									},
 									"font": "Arial;13;0",
 									"parentStyle": false,
-									"left": 125,
+									"left": 124,
 									"top": 153,
-									"width": 5.05908203125,
+									"width": 6.5,
 									"height": 13,
 									"alpha": -0.5235987755982988,
 									"distance": 25,
@@ -2416,9 +2416,9 @@
 									},
 									"font": "Arial;13;0",
 									"parentStyle": false,
-									"left": 326,
+									"left": 325,
 									"top": 257,
-									"width": 5.05908203125,
+									"width": 6.5,
 									"height": 13,
 									"alpha": 0.5235987755982988,
 									"distance": 25,
@@ -2704,9 +2704,9 @@
 									},
 									"font": "Arial;13;0",
 									"parentStyle": false,
-									"left": 335,
+									"left": 334,
 									"top": 311,
-									"width": 5.05908203125,
+									"width": 6.5,
 									"height": 13,
 									"alpha": 0.5235987755982988,
 									"distance": 25,
@@ -2804,7 +2804,7 @@
 					"_parent": {
 						"$ref": "AAAAAAFF+qBWK6M3Z8Y="
 					},
-					"name": "poli.edu.co.pasaportes.modelo",
+					"name": "co.edu.poli.modelo",
 					"ownedElements": [
 						{
 							"_type": "UMLClass",
