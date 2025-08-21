@@ -3219,7 +3219,8 @@
 									"_parent": {
 										"$ref": "AAAAAAGYqa90y6j/yvM="
 									},
-									"name": "main"
+									"name": "main",
+									"type": ""
 								}
 							],
 							"operations": [
@@ -3237,5 +3238,6 @@
 				}
 			]
 		}
-	]
+	],
+	"documentVersion": 1
 }
