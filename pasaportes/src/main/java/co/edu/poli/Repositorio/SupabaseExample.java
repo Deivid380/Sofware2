@@ -1,26 +1,30 @@
+package co.edu.poli.Repositorio;
 import java.sql.Connection;
 import java.sql.DriverManager;
-import java.sql.ResultSet;
-import java.sql.Statement;
+import java.sql.SQLException;
 
 public class SupabaseExample {
     public static void main(String[] args) {
-        String url = "postgresql://postgres:[YOUR-PASSWORD]@db.lwdqgwbkmxjizmdraeti.supabase.co:5432/postgres";
-        String user = "nicolascm30";
-        String password = "Software2*";
+        // Parámetros de conexión
+        String url = "jdbc:postgresql://db.iwqdzmdjtmimjxbuodou.supabase.co:5432/postgres";
+        String user = "postgres"; // tu usuario
+        String password = "Sofware2*"; // tu contraseña de Supabase
 
-        try (Connection conn = DriverManager.getConnection(url, user, password)) {
-            System.out.println("✅ Conectado a Supabase");
+        try {
+            // Registrar el driver (a veces no es necesario en JDBC 4+)
+            Class.forName("org.postgresql.Driver");
 
-            Statement stmt = conn.createStatement();
-            ResultSet rs = stmt.executeQuery("SELECT * FROM usuarios");
+            // Establecer la conexión
+            Connection conn = DriverManager.getConnection(url, user, password);
 
-            while (rs.next()) {
-                System.out.println("Usuario: " + rs.getString("nombre"));
+            if (conn != null) {
+                System.out.println("✅ Conexión exitosa a Supabase!");
+                conn.close();
             }
-
-        } catch (Exception e) {
-            e.printStackTrace();
+        } catch (SQLException e) {
+            System.out.println("❌ Error en la conexión: " + e.getMessage());
+        } catch (ClassNotFoundException e) {
+            System.out.println("❌ Driver JDBC no encontrado: " + e.getMessage());
         }
     }
 }
