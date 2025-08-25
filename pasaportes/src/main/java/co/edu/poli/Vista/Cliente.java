@@ -9,9 +9,9 @@ public class Cliente {
     public static void main(String[] args) {
         // Datos de prueba
         Ciudad ciudad = new Ciudad("Bog", "Bogotá");
-        Titular titular = new Titular("123456", "John Doe", "1990-01-01");
+        Titular titular = new Titular("456789", "John Doe", "2005-06-01");
         Pais pais = new Pais("co", "Colombia", new ArrayList<>(Collections.singletonList(ciudad)));
-        Pasaporte pasaporte = new Pasaporte("PAS123456", "2025-12-31", titular, pais);
+        Pasaporte pasaporte = new Pasaporte("PAS346587  ", "2025-12-31", titular, pais);
 
         // Repositorio
         PasaporteRepo repo = new PasaporteRepo();
@@ -30,6 +30,6 @@ public class Cliente {
         repo.update(pasaporte);
 
         // 🔹 Eliminar
-        repo.delete("PAS123456");
+       //repo.delete("PAS123456");
     }
 }
