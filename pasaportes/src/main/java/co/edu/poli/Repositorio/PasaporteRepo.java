@@ -31,9 +31,9 @@ public class PasaporteRepo implements Repository<Pasaporte, String> {
             ps.setString(3, pasaporte.getPais().getCodigo());
             ps.setDate(4, java.sql.Date.valueOf(pasaporte.getFechaExp()));
             ps.executeUpdate();
-            System.out.println("✅ Pasaporte creado con éxito.");
+            System.out.println(" Pasaporte creado con éxito.");
         } catch (SQLException e) {
-            System.out.println("❌ Error al crear pasaporte: " + e.getMessage());
+            System.out.println(" Error al crear pasaporte: " + e.getMessage());
             e.printStackTrace();
         }
     }
@@ -51,11 +51,11 @@ public class PasaporteRepo implements Repository<Pasaporte, String> {
                     null, // reconstruir Titular si lo necesitas
                     null  // reconstruir Pais si lo necesitas
                 );
-                System.out.println("✅ Pasaporte encontrado: " + p.getId());
+                System.out.println(" Pasaporte encontrado: " + p.getId());
                 return p;
             }
         } catch (SQLException e) {
-            System.out.println("❌ Error al leer pasaporte: " + e.getMessage());
+            System.out.println(" Error al leer pasaporte: " + e.getMessage());
             e.printStackTrace();
         }
         return null;
@@ -75,9 +75,9 @@ public class PasaporteRepo implements Repository<Pasaporte, String> {
                 );
                 lista.add(p);
             }
-            System.out.println("✅ Se leyeron " + lista.size() + " pasaportes.");
+            System.out.println(" Se leyeron " + lista.size() + " pasaportes.");
         } catch (SQLException e) {
-            System.out.println("❌ Error al leer pasaportes: " + e.getMessage());
+            System.out.println(" Error al leer pasaportes: " + e.getMessage());
             e.printStackTrace();
         }
         return lista;
@@ -91,9 +91,9 @@ public class PasaporteRepo implements Repository<Pasaporte, String> {
             ps.setString(2, pasaporte.getId());
             int rows = ps.executeUpdate();
             if (rows > 0) {
-                System.out.println("✅ Pasaporte actualizado.");
+                System.out.println(" Pasaporte actualizado.");
             } else {
-                System.out.println("⚠️ No se encontró pasaporte con ese número.");
+                System.out.println(" No se encontró pasaporte con ese número.");
             }
         } catch (SQLException e) {
             System.out.println("❌ Error al actualizar pasaporte: " + e.getMessage());
@@ -108,14 +108,13 @@ public class PasaporteRepo implements Repository<Pasaporte, String> {
             ps.setString(1, idPasaporte);
             int rows = ps.executeUpdate();
             if (rows > 0) {
-                System.out.println("✅ Pasaporte eliminado.");
+                System.out.println(" Pasaporte eliminado.");
             } else {
-                System.out.println("⚠️ No se encontró pasaporte para eliminar.");
+                System.out.println(" No se encontró pasaporte para eliminar.");
             }
         } catch (SQLException e) {
-            System.out.println("❌ Error al eliminar pasaporte: " + e.getMessage());
+            System.out.println(" Error al eliminar pasaporte: " + e.getMessage());
             e.printStackTrace();
         }
     }
 }
-    
