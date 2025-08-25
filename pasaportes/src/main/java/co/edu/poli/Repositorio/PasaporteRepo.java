@@ -1,16 +1,22 @@
 package co.edu.poli.Repositorio;
 
-import java.sql.*;
-import java.sql.Date;
-import java.util.*;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
+
 import co.edu.poli.Modelo.Pasaporte;
 
 public class PasaporteRepo implements Repository<Pasaporte, String> {
 
-    private static final String URL = "jdbc:postgresql://db.csbejvbgyexmutjebdga.supabase.co:5432/postgres";
-    private static final String USER = "postgres";
-    private static final String PASSWORD = "Software2*";
-
+    // ✅ URL actualizada para Supabase con pooler
+    private static final String URL = "jdbc:postgresql://aws-1-us-east-2.pooler.supabase.com:6543/postgres?sslmode=require";
+    private static final String USER = "postgres.csbejvbgyexmutjebdga"; // usuario completo de Supabase
+    private static final String PASSWORD = "Software2*"; // tu contraseña real
 
     private Connection conectar() throws SQLException {
         return DriverManager.getConnection(URL, USER, PASSWORD);
@@ -23,11 +29,12 @@ public class PasaporteRepo implements Repository<Pasaporte, String> {
             ps.setString(1, pasaporte.getId());
             ps.setString(2, pasaporte.getTitular().getId());
             ps.setString(3, pasaporte.getPais().getCodigo());
-            ps.setDate(4, Date.valueOf(pasaporte.getFechaExp()));
+            ps.setDate(4, java.sql.Date.valueOf(pasaporte.getFechaExp()));
             ps.executeUpdate();
             System.out.println("✅ Pasaporte creado con éxito.");
         } catch (SQLException e) {
             System.out.println("❌ Error al crear pasaporte: " + e.getMessage());
+            e.printStackTrace();
         }
     }
 
@@ -41,14 +48,15 @@ public class PasaporteRepo implements Repository<Pasaporte, String> {
                 Pasaporte p = new Pasaporte(
                     rs.getString("numero"),
                     rs.getString("fecha_exp"),
-                    null, // aquí deberías reconstruir Titular
-                    null  // aquí deberías reconstruir Pais
+                    null, // reconstruir Titular si lo necesitas
+                    null  // reconstruir Pais si lo necesitas
                 );
                 System.out.println("✅ Pasaporte encontrado: " + p.getId());
                 return p;
             }
         } catch (SQLException e) {
             System.out.println("❌ Error al leer pasaporte: " + e.getMessage());
+            e.printStackTrace();
         }
         return null;
     }
@@ -70,6 +78,7 @@ public class PasaporteRepo implements Repository<Pasaporte, String> {
             System.out.println("✅ Se leyeron " + lista.size() + " pasaportes.");
         } catch (SQLException e) {
             System.out.println("❌ Error al leer pasaportes: " + e.getMessage());
+            e.printStackTrace();
         }
         return lista;
     }
@@ -78,7 +87,7 @@ public class PasaporteRepo implements Repository<Pasaporte, String> {
     public void update(Pasaporte pasaporte) {
         String sql = "UPDATE public.pasaporte_prueba SET fecha_exp = ? WHERE numero = ?";
         try (Connection conn = conectar(); PreparedStatement ps = conn.prepareStatement(sql)) {
-            ps.setDate(1, Date.valueOf(pasaporte.getFechaExp()));
+            ps.setDate(1, java.sql.Date.valueOf(pasaporte.getFechaExp()));
             ps.setString(2, pasaporte.getId());
             int rows = ps.executeUpdate();
             if (rows > 0) {
@@ -88,6 +97,7 @@ public class PasaporteRepo implements Repository<Pasaporte, String> {
             }
         } catch (SQLException e) {
             System.out.println("❌ Error al actualizar pasaporte: " + e.getMessage());
+            e.printStackTrace();
         }
     }
 
@@ -104,6 +114,8 @@ public class PasaporteRepo implements Repository<Pasaporte, String> {
             }
         } catch (SQLException e) {
             System.out.println("❌ Error al eliminar pasaporte: " + e.getMessage());
+            e.printStackTrace();
         }
     }
 }
+    
