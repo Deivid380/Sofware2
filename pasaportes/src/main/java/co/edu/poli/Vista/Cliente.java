@@ -11,7 +11,7 @@ public class Cliente {
         Ciudad ciudad = new Ciudad("Bog", "Bogotá");
         Titular titular = new Titular("456789", "John Doe", "2005-06-01");
         Pais pais = new Pais("co", "Colombia", new ArrayList<>(Collections.singletonList(ciudad)));
-        Pasaporte pasaporte = new Pasaporte("PAS346587  ", "2025-12-31", titular, pais);
+        Pasaporte pasaporte = new Pasaporte("PAS355587  ", "2020-10-30", titular, pais);
 
         // Repositorio
         PasaporteRepo repo = new PasaporteRepo();
