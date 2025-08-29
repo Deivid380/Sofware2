@@ -73,6 +73,27 @@ public class PasaporteRepo implements Repository<Pasaporte, String> {
         return lista;
     }
 
+    // 🔹 Nuevo método de búsqueda según requerimiento
+public List<Pasaporte> searchByIdContains(String criterio) {
+    List<Pasaporte> lista = new ArrayList<>();
+    String sql = "SELECT numero, titular_id, pais_codigo, fecha_exp FROM public.pasaporte_prueba WHERE numero LIKE ?";
+    try (Connection conn = conectar(); PreparedStatement ps = conn.prepareStatement(sql)) {
+        ps.setString(1, "%" + criterio + "%"); // ejemplo: "%A%"
+        ResultSet rs = ps.executeQuery();
+        while (rs.next()) {
+            Pasaporte p = new Pasaporte(
+                    rs.getString("numero"),
+                    rs.getString("fecha_exp"),
+                    null,
+                    null);
+            lista.add(p);
+        }
+    } catch (SQLException e) {
+        e.printStackTrace();
+    }
+    return lista;
+}
+
     @Override
     public String update(Pasaporte pasaporte) {
         String sql = "UPDATE public.pasaporte_prueba SET fecha_exp = ? WHERE numero = ?";

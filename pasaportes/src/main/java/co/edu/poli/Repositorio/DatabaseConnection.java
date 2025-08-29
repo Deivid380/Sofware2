@@ -20,7 +20,7 @@ public class DatabaseConnection {
     private DatabaseConnection() {
         try {
             connection = DriverManager.getConnection(URL, USER, PASSWORD);
-            System.out.println("Conexión creada con éxito.");
+            System.out.println("Conexión inicial creada con éxito.");
         } catch (SQLException e) {
             System.out.println("Error al conectar: " + e.getMessage());
             e.printStackTrace();
@@ -39,8 +39,17 @@ public class DatabaseConnection {
         return instance;
     }
 
-    // Devuelve la conexión activa
+    // Devuelve la conexión activa o crea una nueva si está cerrada
     public Connection getConnection() {
+        try {
+            if (connection == null || connection.isClosed()) {
+                connection = DriverManager.getConnection(URL, USER, PASSWORD);
+                System.out.println("Se creó una nueva conexión.");
+            }
+        } catch (SQLException e) {
+            System.out.println("Error al obtener conexión: " + e.getMessage());
+            e.printStackTrace();
+        }
         return connection;
     }
 }
