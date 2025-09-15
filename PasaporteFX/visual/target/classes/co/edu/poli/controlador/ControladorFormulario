@@ -6,7 +6,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.MenuButton;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.TextField;
-
+//se
 public class ControladorFormulario {
 
     @FXML
@@ -37,7 +37,7 @@ public class ControladorFormulario {
     private TextField txt2;
 
      //sui
-     
+
 
     @FXML
     void click(ActionEvent event) {
