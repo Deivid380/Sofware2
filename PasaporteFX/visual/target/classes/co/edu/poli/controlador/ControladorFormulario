@@ -1,0 +1,46 @@
+package co.edu.poli.javafx.controlador;
+
+import javafx.event.ActionEvent;
+import javafx.fxml.FXML;
+import javafx.scene.control.Button;
+import javafx.scene.control.MenuButton;
+import javafx.scene.control.MenuItem;
+import javafx.scene.control.TextField;
+
+public class ControladorFormulario {
+
+    @FXML
+    private MenuButton Btt5;
+
+    @FXML
+    private Button btt1;
+
+    @FXML
+    private Button btt2;
+
+    @FXML
+    private Button btt3;
+
+    @FXML
+    private Button btt4;
+
+    @FXML
+    private MenuItem btt6;
+
+    @FXML
+    private MenuItem btt7;
+
+    @FXML
+    private TextField txt1;
+
+    @FXML
+    private TextField txt2;
+
+     
+
+    @FXML
+    void click(ActionEvent event) {
+
+    }
+
+}
