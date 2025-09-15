@@ -36,6 +36,7 @@ public class ControladorFormulario {
     @FXML
     private TextField txt2;
 
+     //sui
      
 
     @FXML
