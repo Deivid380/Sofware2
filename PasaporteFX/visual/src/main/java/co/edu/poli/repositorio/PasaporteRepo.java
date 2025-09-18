@@ -8,6 +8,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
+import co.edu.poli.Servicios.DatabaseConnection;
 import co.edu.poli.modelo.Pasaporte;
 
 public class PasaporteRepo implements Repository<Pasaporte, String> {
