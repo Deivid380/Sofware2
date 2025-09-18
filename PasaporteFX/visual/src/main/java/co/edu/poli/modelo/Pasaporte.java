@@ -33,6 +33,11 @@ public class Pasaporte {
      */
     public Pais pais;
 
+    /**
+     * 
+     */
+    private String tipo;
+
     public String getId() {
         return id;
     }
@@ -65,13 +70,22 @@ public class Pasaporte {
         this.pais = pais;
     }
 
+    public String getTipo() {
+        return tipo;
+    }
+
+    public void setTipo(String tipo) {
+        this.tipo = tipo;
+    }
+
     @Override
     public String toString() {
         return "Pasaporte{" +
                 "id='" + id + '\'' +
                 ", fechaExp='" + fechaExp + '\'' +
                 ", titular=" + titular +
-                ", pais=" + pais +
+                ", pais=" + pais + 
+                ", tipo='" + tipo + '\'' +
                 '}';   
                 
     }

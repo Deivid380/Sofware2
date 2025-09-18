@@ -10,18 +10,21 @@ public class DatabaseConnection {
     private static DatabaseConnection instance;
 
     // Configuración de conexión
-    private static final String URL = "jdbc:postgresql://aws-1-us-east-2.pooler.supabase.com:6543/postgres?sslmode=require";
+    private static final String BASE_URL = "jdbc:postgresql://aws-1-us-east-2.pooler.supabase.com:6543/postgres";
     private static final String USER = "postgres.csbejvbgyexmutjebdga";
     private static final String PASSWORD = "Software2*";
+    private static final String FULL_URL = BASE_URL + "?user=" + USER + "&password=" + PASSWORD;
 
     private Connection connection; // 🔹 Debe ser java.sql.Connection
 
     // Constructor privado (impide instanciación externa)
     private DatabaseConnection() {
         try {
-            connection = DriverManager.getConnection(URL, USER, PASSWORD);
+            // Se carga el driver explícitamente para asegurar compatibilidad
+            Class.forName("org.postgresql.Driver");
+            this.connection = DriverManager.getConnection(FULL_URL);
             System.out.println("Conexión inicial creada con éxito.");
-        } catch (SQLException e) {
+        } catch (SQLException | ClassNotFoundException e) {
             System.out.println("Error al conectar: " + e.getMessage());
             e.printStackTrace();
         }
@@ -43,12 +46,14 @@ public class DatabaseConnection {
     public Connection getConnection() { // 🔹 Debe devolver Connection
         try {
             if (connection == null || connection.isClosed()) {
-                connection = DriverManager.getConnection(URL, USER, PASSWORD);
+                System.out.println("La conexión estaba cerrada o era nula. Reconectando...");
+                this.connection = DriverManager.getConnection(FULL_URL);
                 System.out.println("Se creó una nueva conexión.");
             }
         } catch (SQLException e) {
             System.out.println("Error al obtener conexión: " + e.getMessage());
             e.printStackTrace();
+            this.connection = null; // Asegurarse de que la conexión sea nula si falla
         }
         return connection;
     }

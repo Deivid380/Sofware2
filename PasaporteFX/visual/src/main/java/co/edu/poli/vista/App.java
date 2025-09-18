@@ -17,8 +17,9 @@ public class App extends Application {
 
     @Override
     public void start(Stage stage) throws IOException {
-        scene = new Scene(loadFXML("primary"), 640, 480);
+        scene = new Scene(loadFXML("primary")); // Dejar que el FXML defina el tamaño
         stage.setScene(scene);
+        stage.setTitle("Gestión de Pasaportes");
         stage.show();
     }
 
@@ -27,7 +28,9 @@ public class App extends Application {
     }
 
     private static Parent loadFXML(String fxml) throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource(fxml + ".fxml"));
+        // Construye la ruta absoluta al archivo FXML desde la raíz del classpath
+        String fxmlPath = "/co/edu/poli/javafx/" + fxml + ".fxml";
+        FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource(fxmlPath));
         return fxmlLoader.load();
     }
 

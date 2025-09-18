@@ -8,66 +8,78 @@ import javafx.scene.control.MenuButton;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.TextField;
 
+// Importaciones para la lógica de negocio y el modelo
+import co.edu.poli.repositorio.PasaporteRepo;
+import co.edu.poli.modelo.Pasaporte;
+import co.edu.poli.modelo.Titular; // Asumiendo que esta clase existe
+import co.edu.poli.modelo.Pais;    // Asumiendo que esta clase existe
+import java.time.LocalDate;
+
 public class ControladorFormulario {
 
     @FXML
-    private MenuButton Btt5;
+    private MenuButton passportTypeMenuButton;
 
     @FXML
-    private Button btt1; // Create
+    private Button createButton;
 
     @FXML
-    private Button btt2; // Read
+    private Button readButton;
 
     @FXML
-    private Button btt3; // Update
+    private Button updateButton;
 
     @FXML
-    private Button btt4; // Delete
+    private Button deleteButton;
 
     @FXML
-    private MenuItem btt6; // Ordinario
+    private MenuItem ordinaryPassportMenuItem;
 
     @FXML
-    private MenuItem btt7; // Diplomático
+    private MenuItem diplomaticPassportMenuItem;
 
     @FXML
-    private TextField txt1; // ID
+    private TextField idTextField;
 
     @FXML
-    private TextField txt2; // Nombre
+    private TextField nameTextField;
 
     private String tipoPasaporte; // se guarda el tipo seleccionado
+
+    private PasaporteRepo pasaporteRepo;
 
     // ---------------------------
     // Manejo de menú desplegable
     // ---------------------------
     @FXML
     void initialize() {
-        btt6.setOnAction(e -> {
+        // Inicializamos el repositorio para poder usarlo en los métodos de acción.
+        this.pasaporteRepo = new PasaporteRepo();
+
+        ordinaryPassportMenuItem.setOnAction(e -> {
             tipoPasaporte = "Ordinario";
-            Btt5.setText("Pasaporte Ordinario");
+            passportTypeMenuButton.setText("Pasaporte Ordinario");
         });
 
-        btt7.setOnAction(e -> {
+        diplomaticPassportMenuItem.setOnAction(e -> {
             tipoPasaporte = "Diplomático";
-            Btt5.setText("Pasaporte Diplomático");
+            passportTypeMenuButton.setText("Pasaporte Diplomático");
         });
     }
 
     // ---------------------------
     // Validación de campos
     // ---------------------------
-    private boolean validarCampos() {
-        if (txt1.getText().isEmpty() || txt2.getText().isEmpty() || tipoPasaporte == null) {
-            mostrarAlerta("Error", "Debe llenar ID, Nombre y seleccionar tipo de pasaporte.");
+    private boolean validarCamposCompletos() {
+        if (idTextField.getText().isEmpty() || nameTextField.getText().isEmpty() || tipoPasaporte == null) {
+            mostrarAlerta("Campos Incompletos", "Debe llenar ID, Nombre y seleccionar tipo de pasaporte.", Alert.AlertType.WARNING);
             return false;
         }
         return true;
     }
 
-    private void mostrarAlerta(String titulo, String mensaje) {
-        Alert alert = new Alert(Alert.AlertType.WARNING);
+    private void mostrarAlerta(String titulo, String mensaje, Alert.AlertType tipo) {
+        Alert alert = new Alert(tipo);
         alert.setTitle(titulo);
         alert.setHeaderText(null);
         alert.setContentText(mensaje);
@@ -77,34 +89,117 @@ public class ControladorFormulario {
     // ---------------------------
     // Acciones de botones
     // ---------------------------
-    @FXML
-    void click(ActionEvent event) {
-        Object source = event.getSource();
 
-        if (source == btt1) { // Create
-            if (validarCampos()) {
-                System.out.println("Crear pasaporte: " + txt1.getText() + ", " + txt2.getText() + ", " + tipoPasaporte);
-                // Aquí puedes llamar a PasaporteRepo.create(...)
+    private void limpiarCampos() {
+        idTextField.clear();
+        nameTextField.clear();
+        tipoPasaporte = null;
+        passportTypeMenuButton.setText("Seleccionar tipo");
+    }
+
+    @FXML
+    void crearPasaporte(ActionEvent event) {
+        if (validarCamposCompletos()) {
+            try {
+                // Validación adicional: Asegurarse de que el ID es un número
+                Integer.parseInt(idTextField.getText());
+
+                // --- NOTA: Creación de objetos simplificada para el ejemplo ---
+                // Tu repositorio espera un Titular y un Pais. Aquí creamos objetos dummy.
+                // Lo ideal sería tener campos en el formulario para estos datos.
+                Titular titular = new Titular(nameTextField.getText(), nameTextField.getText(), "COL");
+                Pais pais = new Pais("COL", "Colombia");
+                LocalDate fechaExp = LocalDate.now().plusYears(10); // Fecha de expiración en 10 años
+
+                Pasaporte nuevoPasaporte = new Pasaporte(idTextField.getText(), fechaExp.toString(), titular, pais);
+                
+                String resultado = pasaporteRepo.create(nuevoPasaporte, tipoPasaporte);
+                mostrarAlerta("Información", resultado, Alert.AlertType.INFORMATION);
+                limpiarCampos();
+
+            } catch (NumberFormatException e) {
+                mostrarAlerta("Error de Formato", "El ID del pasaporte debe ser un número entero.", Alert.AlertType.ERROR);
+            } catch (Exception e) {
+                mostrarAlerta("Error de Creación", "Ocurrió un error: " + e.getMessage(), Alert.AlertType.ERROR);
             }
-        } else if (source == btt2) { // Read
-            if (txt1.getText().isEmpty()) {
-                mostrarAlerta("Error", "Debe ingresar el ID para buscar.");
+        }
+    }
+
+    @FXML
+    void leerPasaporte(ActionEvent event) {
+        if (idTextField.getText().isEmpty()) {
+            mostrarAlerta("Campo Vacío", "Debe ingresar el ID para buscar.", Alert.AlertType.WARNING);
+            return;
+        }
+
+        if (tipoPasaporte == null) {
+            mostrarAlerta("Campo Vacío", "Debe seleccionar un tipo de pasaporte para buscar.", Alert.AlertType.WARNING);
+            return;
+        }
+
+        try {
+            // Validar que el ID sea un número antes de buscar
+            Integer.parseInt(idTextField.getText());
+            Pasaporte pasaporte = pasaporteRepo.read(idTextField.getText(), tipoPasaporte);
+
+            if (pasaporte != null) {
+                // Rellenamos los campos con la información encontrada
+                idTextField.setText(pasaporte.getId());
+                nameTextField.setText(pasaporte.getTitular() != null ? pasaporte.getTitular().getNombre() : "N/A");
+                mostrarAlerta("Éxito", "Pasaporte encontrado.", Alert.AlertType.INFORMATION);
             } else {
-                System.out.println("Buscar pasaporte con ID: " + txt1.getText());
-                // Aquí puedes llamar a PasaporteRepo.read(...)
+                mostrarAlerta("No Encontrado", "No se encontró un pasaporte con el ID: " + idTextField.getText(), Alert.AlertType.INFORMATION);
+                limpiarCampos();
             }
-        } else if (source == btt3) { // Update
-            if (validarCampos()) {
-                System.out.println("Actualizar pasaporte: " + txt1.getText() + " con nuevo nombre: " + txt2.getText());
-                // Aquí puedes llamar a PasaporteRepo.update(...)
+        } catch (NumberFormatException e) {
+            mostrarAlerta("Error de Formato", "El ID del pasaporte debe ser un número entero.", Alert.AlertType.ERROR);
+        }
+    }
+
+    @FXML
+    void actualizarPasaporte(ActionEvent event) {
+        if (validarCamposCompletos()) {
+            try {
+                // Validar que el ID sea un número antes de actualizar
+                Integer.parseInt(idTextField.getText());
+
+                Titular titularActualizado = new Titular(nameTextField.getText(), nameTextField.getText(), "COL");
+                LocalDate fechaExp = LocalDate.now().plusYears(5); // Nueva fecha de expiración
+                Pasaporte pasaporteActualizado = new Pasaporte(idTextField.getText(), fechaExp.toString(), titularActualizado, null);
+
+                if (tipoPasaporte == null) {
+                    mostrarAlerta("Campo Vacío", "Debe seleccionar un tipo de pasaporte para actualizar.", Alert.AlertType.WARNING);
+                    return;
+                }
+                String resultado = pasaporteRepo.update(pasaporteActualizado, tipoPasaporte);
+                mostrarAlerta("Actualización", resultado, Alert.AlertType.INFORMATION);
+                limpiarCampos();
+
+            } catch (NumberFormatException e) {
+                mostrarAlerta("Error de Formato", "El ID del pasaporte debe ser un número entero.", Alert.AlertType.ERROR);
             }
-        } else if (source == btt4) { // Delete
-            if (txt1.getText().isEmpty()) {
-                mostrarAlerta("Error", "Debe ingresar el ID para eliminar.");
-            } else {
-                System.out.println("Eliminar pasaporte con ID: " + txt1.getText());
-                // Aquí puedes llamar a PasaporteRepo.delete(...)
-            }
+        }
+    }
+
+    @FXML
+    void eliminarPasaporte(ActionEvent event) {
+        if (idTextField.getText().isEmpty()) {
+            mostrarAlerta("Campo Vacío", "Debe ingresar el ID para eliminar.", Alert.AlertType.WARNING);
+            return;
+        }
+
+        if (tipoPasaporte == null) {
+            mostrarAlerta("Campo Vacío", "Debe seleccionar un tipo de pasaporte para eliminar.", Alert.AlertType.WARNING);
+            return;
+        }
+
+        try {
+            Integer.parseInt(idTextField.getText()); // Validar que el ID es un número
+            String resultado = pasaporteRepo.delete(idTextField.getText(), tipoPasaporte);
+            mostrarAlerta("Eliminación", resultado, Alert.AlertType.INFORMATION);
+            limpiarCampos();
+        } catch (NumberFormatException e) {
+            mostrarAlerta("Error de Formato", "El ID del pasaporte debe ser un número entero.", Alert.AlertType.ERROR);
         }
     }
 }
