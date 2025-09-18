@@ -10,7 +10,7 @@ public class DatabaseConnection {
     private static DatabaseConnection instance;
 
     // Configuración de conexión
-    private static final String BASE_URL = "jdbc:postgresql://aws-1-us-east-2.pooler.supabase.com:6543/postgres";
+   private static final String BASE_URL = "jdbc:postgresql://aws-1-us-east-2.pooler.supabase.com:5432/postgres";
     private static final String USER = "postgres.csbejvbgyexmutjebdga";
     private static final String PASSWORD = "Software2*";
     private static final String FULL_URL = BASE_URL + "?user=" + USER + "&password=" + PASSWORD;
