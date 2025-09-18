@@ -14,7 +14,7 @@ public class DatabaseConnection {
     private static final String USER = "postgres.csbejvbgyexmutjebdga";
     private static final String PASSWORD = "Software2*";
 
-    private Connection connection;
+    private Connection connection; // 🔹 Debe ser java.sql.Connection
 
     // Constructor privado (impide instanciación externa)
     private DatabaseConnection() {
@@ -40,7 +40,7 @@ public class DatabaseConnection {
     }
 
     // Devuelve la conexión activa o crea una nueva si está cerrada
-    public Connection getConnection() {
+    public Connection getConnection() { // 🔹 Debe devolver Connection
         try {
             if (connection == null || connection.isClosed()) {
                 connection = DriverManager.getConnection(URL, USER, PASSWORD);

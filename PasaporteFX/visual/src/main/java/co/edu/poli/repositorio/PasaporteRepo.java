@@ -1,7 +1,6 @@
 package co.edu.poli.repositorio;
 
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -9,7 +8,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
-import co.edu.poli.Modelo.Pasaporte;
+import co.edu.poli.modelo.Pasaporte;
 
 public class PasaporteRepo implements Repository<Pasaporte, String> {
 
