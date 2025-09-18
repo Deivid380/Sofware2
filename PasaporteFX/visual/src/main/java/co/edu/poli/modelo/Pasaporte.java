@@ -5,7 +5,7 @@ import java.io.*;
 import java.util.*;
 
 
-public class Pasaporte {
+public abstract class Pasaporte {
 
 
     public Pasaporte(String id, String fechaExp, Titular titular, Pais pais) {
