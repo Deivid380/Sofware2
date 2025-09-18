@@ -3684,6 +3684,7 @@
 												"$ref": "AAAAAAGZTzy4l8STRxA="
 											},
 											"visible": false,
+											"fillColor": "#FFFFD8",
 											"font": "Arial;13;0",
 											"parentStyle": true,
 											"left": 96,
@@ -3696,6 +3697,7 @@
 											"_parent": {
 												"$ref": "AAAAAAGZTzy4l8STRxA="
 											},
+											"fillColor": "#FFFFD8",
 											"font": "Arial;13;1",
 											"parentStyle": true,
 											"left": 573,
@@ -3711,6 +3713,7 @@
 												"$ref": "AAAAAAGZTzy4l8STRxA="
 											},
 											"visible": false,
+											"fillColor": "#FFFFD8",
 											"font": "Arial;13;0",
 											"parentStyle": true,
 											"left": 96,
@@ -3726,6 +3729,7 @@
 												"$ref": "AAAAAAGZTzy4l8STRxA="
 											},
 											"visible": false,
+											"fillColor": "#FFFFD8",
 											"font": "Arial;13;0",
 											"parentStyle": true,
 											"left": 96,
@@ -3734,6 +3738,7 @@
 											"horizontalAlignment": 1
 										}
 									],
+									"fillColor": "#FFFFD8",
 									"font": "Arial;13;0",
 									"parentStyle": true,
 									"left": 568,
@@ -3759,6 +3764,7 @@
 									"$ref": "AAAAAAGY7xs7AvmWjNI="
 								}
 							],
+							"fillColor": "#FFFFD8",
 							"font": "Arial;13;0",
 							"parentStyle": false,
 							"containerChangeable": true,
@@ -7101,7 +7107,8 @@
 													"_parent": {
 														"$ref": "AAAAAAGZW2gHfFZNvS8="
 													},
-													"name": "String"
+													"name": "String",
+													"type": ""
 												},
 												{
 													"_type": "UMLParameter",
@@ -7128,7 +7135,8 @@
 													"_parent": {
 														"$ref": "AAAAAAGZW2xfN2lwDII="
 													},
-													"name": "String"
+													"name": "String",
+													"type": ""
 												},
 												{
 													"_type": "UMLParameter",
@@ -7157,7 +7165,8 @@
 													"_parent": {
 														"$ref": "AAAAAAGZW23vGXbSQz8="
 													},
-													"name": "Titular"
+													"name": "Titular",
+													"type": ""
 												},
 												{
 													"_type": "UMLParameter",
