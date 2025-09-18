@@ -6,6 +6,7 @@ import java.sql.ResultSet;
 import java.sql.Types;
 import java.sql.SQLException;
 
+import co.edu.Servicios.DatabaseConnection;
 import co.edu.poli.modelo.Pasaporte;
 import co.edu.poli.modelo.Titular;
 
