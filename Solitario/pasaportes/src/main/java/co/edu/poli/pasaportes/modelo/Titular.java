@@ -11,27 +11,22 @@ public class Titular {
         this.nacionalidad = nacionalidad;
     }
 
-    public String getId() {
-        return id;
-    }
+    // getters y setters
+    public String getId() { return id; }
+    public void setId(String id) { this.id = id; }
 
-    public void setId(String id) {
-        this.id = id;
-    }
+    public String getNombre() { return nombre; }
+    public void setNombre(String nombre) { this.nombre = nombre; }
 
-    public String getNombre() {
-        return nombre;
-    }
+    public String getNacionalidad() { return nacionalidad; }
+    public void setNacionalidad(String nacionalidad) { this.nacionalidad = nacionalidad; }
 
-    public void setNombre(String nombre) {
-        this.nombre = nombre;
-    }
-
-    public String getNacionalidad() {
-        return nacionalidad;
-    }
-
-    public void setNacionalidad(String nacionalidad) {
-        this.nacionalidad = nacionalidad;
+    @Override
+    public String toString() {
+        return "Titular{" +
+                "id='" + id + '\'' +
+                ", nombre='" + nombre + '\'' +
+                ", nacionalidad='" + nacionalidad + '\'' +
+                '}';
     }
 }
