@@ -6,14 +6,9 @@ public class FactoryOrdinario implements FactoryPasaporte {
 
     @Override
     public Pasaporte crearPasaporte(String tipo, String id, String fechaExp, Titular titular, Pais pais) {
-        if (tipo.equalsIgnoreCase("Ordinario")) {
-            return new PasaporteOrdinario.Builder()
-                    .getid(id)
-                    .getfechaExp(fechaExp)
-                    .gettitular(titular)
-                    .getpais(pais)
-                    .build();
+        if (tipo != null && tipo.equalsIgnoreCase("Ordinario")) {
+            return new PasaporteOrdinario(id, fechaExp, titular, pais);
         }
-        return null;
+        throw new IllegalArgumentException("Tipo no válido para FactoryOrdinario: " + tipo);
     }
 }
