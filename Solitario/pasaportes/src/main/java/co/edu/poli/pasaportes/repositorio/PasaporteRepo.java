@@ -13,7 +13,6 @@ public class PasaporteRepo implements Repository<Pasaporte, String> {
         return Singleton.getInstance().conexionActiva();
     }
 
-    // 🔹 Retorna el nombre real de la tabla según tipo
     private String getTableName(String tipoPasaporte) {
         if ("Ordinario".equalsIgnoreCase(tipoPasaporte)) {
             return "pasaporte_ordinario";
@@ -23,34 +22,36 @@ public class PasaporteRepo implements Repository<Pasaporte, String> {
         throw new IllegalArgumentException("Tipo de pasaporte no válido: " + tipoPasaporte);
     }
 
+    // Método de creación corregido para usar 'titular'
     @Override
     public String create(Pasaporte pasaporte, String tipoPasaporte) {
         String specificTableName = getTableName(tipoPasaporte);
+        
         String specificSql = "INSERT INTO public." + specificTableName +
-                " (numero, titular_id, pais_codigo, fecha_exp) VALUES (?, ?, ?, ?)";
-
+            " (id, titular, pais_codigo, fecha_exp) VALUES (?, ?, ?, ?)";
+        
         String baseSql = "INSERT INTO public.pasaporte_base " +
-                "(id, numero, titular_id, pais_codigo, fecha_exp, tipo_pass) VALUES (?, ?, ?, ?, ?, ?)";
+            "(id, seguridad_id, tipo_pass, titular, pais_codigo, fecha_exp) VALUES (?, ?, ?, ?, ?, ?)";
 
         try (Connection conn = conectar()) {
             conn.setAutoCommit(false);
 
+            try (PreparedStatement psBase = conn.prepareStatement(baseSql)) {
+                psBase.setString(1, pasaporte.getId());
+                psBase.setString(2, java.util.UUID.randomUUID().toString());
+                psBase.setString(3, tipoPasaporte);
+                psBase.setString(4, pasaporte.getTitular().getNombre());
+                psBase.setString(5, pasaporte.getPais().getCodigo());
+                psBase.setDate(6, java.sql.Date.valueOf(pasaporte.getFechaExp()));
+                psBase.executeUpdate();
+            }
+
             try (PreparedStatement psSpecific = conn.prepareStatement(specificSql)) {
-                psSpecific.setInt(1, Integer.parseInt(pasaporte.getId()));
-                psSpecific.setString(2, pasaporte.getTitular().getId());
+                psSpecific.setString(1, pasaporte.getId());
+                psSpecific.setString(2, pasaporte.getTitular().getNombre());
                 psSpecific.setString(3, pasaporte.getPais().getCodigo());
                 psSpecific.setDate(4, java.sql.Date.valueOf(pasaporte.getFechaExp()));
                 psSpecific.executeUpdate();
-            }
-
-            try (PreparedStatement psBase = conn.prepareStatement(baseSql)) {
-                psBase.setObject(1, java.util.UUID.randomUUID(), Types.OTHER);
-                psBase.setInt(2, Integer.parseInt(pasaporte.getId()));
-                psBase.setString(3, pasaporte.getTitular().getId());
-                psBase.setString(4, pasaporte.getPais().getCodigo());
-                psBase.setDate(5, java.sql.Date.valueOf(pasaporte.getFechaExp()));
-                psBase.setString(6, tipoPasaporte);
-                psBase.executeUpdate();
             }
 
             conn.commit();
@@ -62,29 +63,28 @@ public class PasaporteRepo implements Repository<Pasaporte, String> {
         }
     }
 
+    // Método de lectura corregido para usar 'titular'
     @Override
     public Pasaporte read(String idPasaporte, String tipoPasaporte) {
-        String tableName = getTableName(tipoPasaporte);
-
-        String sql = "SELECT p.numero, p.titular_id, p.pais_codigo, p.fecha_exp, t.nombre as titular_nombre " +
-                     "FROM public." + tableName + " p " +
-                     "LEFT JOIN public.\"Titular\" t ON p.titular_id = t.id " +
-                     "WHERE p.numero = ?";
+        String sql = "SELECT p.id, p.titular, p.pais_codigo, p.fecha_exp, p.tipo_pass " +
+                     "FROM public.pasaporte_base p " +
+                     "WHERE p.id = ?";
 
         try (Connection conn = conectar();
              PreparedStatement ps = conn.prepareStatement(sql)) {
 
-            ps.setInt(1, Integer.parseInt(idPasaporte));
+            ps.setString(1, idPasaporte);
             ResultSet rs = ps.executeQuery();
 
             if (rs.next()) {
-                Titular titular = new Titular(rs.getString("titular_id"), rs.getString("titular_nombre"), null);
+                Titular titular = new Titular(null, rs.getString("titular"), null);
                 Pais pais = new Pais(rs.getString("pais_codigo"), null);
+                String tipo = rs.getString("tipo_pass");
 
-                if ("Ordinario".equalsIgnoreCase(tipoPasaporte)) {
-                    return new PasaporteOrdinario(rs.getString("numero"), rs.getString("fecha_exp"), titular, pais);
+                if ("Ordinario".equalsIgnoreCase(tipo)) {
+                    return new PasaporteOrdinario(rs.getString("id"), rs.getString("fecha_exp"), titular, pais);
                 } else {
-                    return new PasaporteDiplomatico(rs.getString("numero"), rs.getString("fecha_exp"), titular, pais);
+                    return new PasaporteDiplomatico(rs.getString("id"), rs.getString("fecha_exp"), titular, pais);
                 }
             }
         } catch (SQLException e) {
@@ -93,28 +93,29 @@ public class PasaporteRepo implements Repository<Pasaporte, String> {
         return null;
     }
 
+    // Método de actualización corregido para usar 'titular'
     @Override
     public String update(Pasaporte pasaporte, String tipoPasaporte) {
         String tableName = getTableName(tipoPasaporte);
-        String specificSql = "UPDATE public." + tableName + " SET titular_id = ?, fecha_exp = ? WHERE numero = ?";
-        String baseSql = "UPDATE public.pasaporte_base SET titular_id = ?, fecha_exp = ? WHERE numero = ?";
+        String specificSql = "UPDATE public." + tableName + " SET titular = ?, fecha_exp = ? WHERE id = ?";
+        String baseSql = "UPDATE public.pasaporte_base SET titular = ?, fecha_exp = ? WHERE id = ?";
 
         try (Connection conn = conectar()) {
             conn.setAutoCommit(false);
 
             int specificRows;
             try (PreparedStatement psSpecific = conn.prepareStatement(specificSql)) {
-                psSpecific.setString(1, pasaporte.getTitular().getId());
+                psSpecific.setString(1, pasaporte.getTitular().getNombre());
                 psSpecific.setDate(2, java.sql.Date.valueOf(pasaporte.getFechaExp()));
-                psSpecific.setInt(3, Integer.parseInt(pasaporte.getId()));
+                psSpecific.setString(3, pasaporte.getId());
                 specificRows = psSpecific.executeUpdate();
             }
 
             int baseRows;
             try (PreparedStatement psBase = conn.prepareStatement(baseSql)) {
-                psBase.setString(1, pasaporte.getTitular().getId());
+                psBase.setString(1, pasaporte.getTitular().getNombre());
                 psBase.setDate(2, java.sql.Date.valueOf(pasaporte.getFechaExp()));
-                psBase.setInt(3, Integer.parseInt(pasaporte.getId()));
+                psBase.setString(3, pasaporte.getId());
                 baseRows = psBase.executeUpdate();
             }
 
@@ -132,24 +133,25 @@ public class PasaporteRepo implements Repository<Pasaporte, String> {
         }
     }
 
+    // Método de eliminación corregido para usar 'id'
     @Override
     public String delete(String idPasaporte, String tipoPasaporte) {
         String tableName = getTableName(tipoPasaporte);
-        String specificSql = "DELETE FROM public." + tableName + " WHERE numero = ?";
-        String baseSql = "DELETE FROM public.pasaporte_base WHERE numero = ?";
+        String specificSql = "DELETE FROM public." + tableName + " WHERE id = ?";
+        String baseSql = "DELETE FROM public.pasaporte_base WHERE id = ?";
 
         try (Connection conn = conectar()) {
             conn.setAutoCommit(false);
 
             int specificRows;
             try (PreparedStatement psSpecific = conn.prepareStatement(specificSql)) {
-                psSpecific.setInt(1, Integer.parseInt(idPasaporte));
+                psSpecific.setString(1, idPasaporte);
                 specificRows = psSpecific.executeUpdate();
             }
 
             int baseRows;
             try (PreparedStatement psBase = conn.prepareStatement(baseSql)) {
-                psBase.setInt(1, Integer.parseInt(idPasaporte));
+                psBase.setString(1, idPasaporte);
                 baseRows = psBase.executeUpdate();
             }
 
@@ -171,31 +173,27 @@ public class PasaporteRepo implements Repository<Pasaporte, String> {
     public List<Pasaporte> readAll() {
         List<Pasaporte> pasaportes = new ArrayList<>();
 
-        String sql = "SELECT p.numero, p.titular_id, p.pais_codigo, p.fecha_exp, p.tipo_pass, t.nombre as titular_nombre " +
-                     "FROM public.pasaporte_base p " +
-                     "LEFT JOIN public.\"Titular\" t ON p.titular_id = t.id";
+        String sql = "SELECT p.id, p.titular, p.pais_codigo, p.fecha_exp, p.tipo_pass " +
+                     "FROM public.pasaporte_base p";
 
         try (Connection conn = conectar();
              PreparedStatement ps = conn.prepareStatement(sql);
              ResultSet rs = ps.executeQuery()) {
 
             while (rs.next()) {
-                Titular titular = new Titular(rs.getString("titular_id"), rs.getString("titular_nombre"), null);
+                Titular titular = new Titular(null, rs.getString("titular"), null);
                 Pais pais = new Pais(rs.getString("pais_codigo"), null);
-
                 String tipo = rs.getString("tipo_pass");
 
                 if ("Ordinario".equalsIgnoreCase(tipo)) {
-                    pasaportes.add(new PasaporteOrdinario(rs.getString("numero"), rs.getString("fecha_exp"), titular, pais));
+                    pasaportes.add(new PasaporteOrdinario(rs.getString("id"), rs.getString("fecha_exp"), titular, pais));
                 } else if ("Diplomático".equalsIgnoreCase(tipo)) {
-                    pasaportes.add(new PasaporteDiplomatico(rs.getString("numero"), rs.getString("fecha_exp"), titular, pais));
+                    pasaportes.add(new PasaporteDiplomatico(rs.getString("id"), rs.getString("fecha_exp"), titular, pais));
                 }
             }
-
         } catch (SQLException e) {
             e.printStackTrace();
         }
-
         return pasaportes;
     }
 }
