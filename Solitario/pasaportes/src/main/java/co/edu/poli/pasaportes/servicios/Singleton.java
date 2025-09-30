@@ -6,7 +6,6 @@ import java.util.ResourceBundle;
 public class Singleton {
 
     private static Singleton instancia;
-    private Connection conexion;
 
     private static final String URL;
     private static final String USUARIO;
@@ -34,36 +33,15 @@ public class Singleton {
         return instancia;
     }
 
+    // 🔹 SIEMPRE abre una conexión nueva
     public Connection conectar() throws SQLException {
-        if (conexion == null || conexion.isClosed()) {
-            try {
-                conexion = DriverManager.getConnection(URL, USUARIO, CONTRA);
-                System.out.println("Conexión establecida.");
-            } catch (SQLException e) {
-                System.err.println("Error al conectar con la base de datos: " + e.getMessage());
-                throw e;
-            }
+        try {
+            Connection conexion = DriverManager.getConnection(URL, USUARIO, CONTRA);
+            System.out.println("Conexión establecida.");
+            return conexion;
+        } catch (SQLException e) {
+            System.err.println("Error al conectar con la base de datos: " + e.getMessage());
+            throw e;
         }
-        return conexion;
-    }
-
-    public void cerrarConexion() throws SQLException {
-        if (conexion != null && !conexion.isClosed()) {
-            try {
-                conexion.close();
-                conexion = null;
-                System.out.println("Conexión cerrada.");
-            } catch (SQLException e) {
-                System.err.println("Error al cerrar la conexión: " + e.getMessage());
-                throw e;
-            }
-        }
-    }
-
-    public Connection conexionActiva() throws SQLException {
-        if (conexion == null || conexion.isClosed()) {
-            throw new SQLException("La conexión no está activa.");
-        }
-        return conexion;
     }
 }
