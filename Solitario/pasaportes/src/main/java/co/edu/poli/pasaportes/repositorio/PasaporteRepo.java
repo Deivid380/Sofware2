@@ -64,34 +64,34 @@ public class PasaporteRepo implements Repository<Pasaporte, String> {
     }
 
     // Método de lectura corregido para usar 'titular'
-    @Override
-    public Pasaporte read(String idPasaporte, String tipoPasaporte) {
-        String sql = "SELECT p.id, p.titular, p.pais_codigo, p.fecha_exp, p.tipo_pass " +
-                     "FROM public.pasaporte_base p " +
-                     "WHERE p.id = ?";
+@Override
+public Pasaporte read(String idPasaporte, String tipoPasaporte) {
+    String sql = "SELECT p.id, p.titular, p.pais_codigo, p.fecha_exp, p.tipo_pass " +
+                 "FROM public.pasaporte_base p " +
+                 "WHERE p.id = ?";
 
-        try (Connection conn = conectar();
-             PreparedStatement ps = conn.prepareStatement(sql)) {
+    try (Connection conn = conectar();
+         PreparedStatement ps = conn.prepareStatement(sql)) {
 
-            ps.setString(1, idPasaporte);
-            ResultSet rs = ps.executeQuery();
+        ps.setString(1, idPasaporte);
+        ResultSet rs = ps.executeQuery();
 
-            if (rs.next()) {
-                Titular titular = new Titular(null, rs.getString("titular"), null);
-                Pais pais = new Pais(rs.getString("pais_codigo"), null);
-                String tipo = rs.getString("tipo_pass");
+        if (rs.next()) {
+            Titular titular = new Titular(null, rs.getString("titular"), null);
+            Pais pais = new Pais(rs.getString("pais_codigo"), null);
+            String tipo = rs.getString("tipo_pass");
 
-                if ("Ordinario".equalsIgnoreCase(tipo)) {
-                    return new PasaporteOrdinario(rs.getString("id"), rs.getString("fecha_exp"), titular, pais);
-                } else {
-                    return new PasaporteDiplomatico(rs.getString("id"), rs.getString("fecha_exp"), titular, pais);
-                }
+            if ("Ordinario".equalsIgnoreCase(tipo)) {
+                return new PasaporteOrdinario(rs.getString("id"), rs.getString("fecha_exp"), titular, pais);
+            } else {
+                return new PasaporteDiplomatico(rs.getString("id"), rs.getString("fecha_exp"), titular, pais);
             }
-        } catch (SQLException e) {
-            e.printStackTrace();
         }
-        return null;
+    } catch (SQLException e) {
+        e.printStackTrace();
     }
+    return null;
+}
 
     // Método de actualización corregido para usar 'titular'
     @Override

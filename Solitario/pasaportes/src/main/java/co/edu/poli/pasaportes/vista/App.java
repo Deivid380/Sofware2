@@ -22,11 +22,15 @@ public class App extends Application {
 
     public static void cambiarVista(String fxml) {
         try {
-            FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource("/co/edu/poli/pasaportes/" + fxml + ".fxml"));
+            // ✅ CORRECCIÓN FINAL: Usamos la ruta completa del paquete 
+            // porque el archivo está en /resources/co/edu/poli/pasaportes/
+            FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource("/co/edu/poli/pasaportes/" + fxml + ".fxml")); 
+            
             Parent root = fxmlLoader.load();
             primaryStage.setScene(new Scene(root));
             primaryStage.centerOnScreen();
         } catch (IOException e) {
+            System.err.println("Error al cargar la vista FXML: " + fxml);
             e.printStackTrace();
         }
     }
