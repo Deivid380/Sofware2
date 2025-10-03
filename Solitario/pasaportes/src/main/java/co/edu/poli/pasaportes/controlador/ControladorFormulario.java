@@ -42,25 +42,33 @@ public class ControladorFormulario {
     @FXML
     private TextField txt2; // Nombre del titular
 
+    // ===================================
+    // 🔹 CAMPOS FALTANTES AGREGADOS
+    // ===================================
+    @FXML
+    private TextArea area2; // Corresponde al fx:id="area2" en el FXML
 
-    // =======================
+    @FXML
+    private Button arbol;  // Corresponde al fx:id="arbol" en el FXML
+    
+    // ===================================
     // 🔹 Normalizar tipo
-    // =======================
+    // ===================================
     private String normalizarTipo(String tipoUI) {
         if (tipoUI == null) return null;
 
         String normalizado = Normalizer.normalize(tipoUI, Normalizer.Form.NFD)
-                                       .replaceAll("\\p{M}", "") // elimina tildes
-                                       .toLowerCase();
+                                    .replaceAll("\\p{M}", "") // elimina tildes
+                                    .toLowerCase();
 
         if (normalizado.equals("diplomatico")) return "Diplomático";
         if (normalizado.equals("ordinario")) return "Ordinario";
         return null;
     }
 
-    // =======================
+    // ===================================
     // 🔹 Inicializar ComboBox
-    // =======================
+    // ===================================
     @FXML
     private void initialize() {
         combo1.getItems().setAll("Ordinario", "Diplomático");
@@ -75,9 +83,9 @@ public class ControladorFormulario {
         return null;
     }
 
-    // =======================
+    // ===================================
     // 🔹 Actualizar Titular
-    // =======================
+    // ===================================
     private String actualizarNombreTitular(String titularId, String nuevoNombre) {
         try {
             Connection conn = Singleton.getInstance().conectar();
@@ -94,9 +102,9 @@ public class ControladorFormulario {
         }
     }
 
-    // =======================
+    // ===================================
     // 🔹 Crear
-    // =======================
+    // ===================================
     @FXML
     void Crear(ActionEvent event) {
         area1.clear();
@@ -142,9 +150,9 @@ public class ControladorFormulario {
         }
     }
 
-    // =======================
+    // ===================================
     // 🔹 Actualizar
-    // =======================
+    // ===================================
     @FXML
     void Actualizar(ActionEvent event) {
         area1.clear();
@@ -180,9 +188,9 @@ public class ControladorFormulario {
         }
     }
 
-    // =======================
+    // ===================================
     // 🔹 Buscar
-    // =======================
+    // ===================================
     @FXML
     void Buscar(ActionEvent event) {
         area1.clear();
@@ -221,9 +229,9 @@ public class ControladorFormulario {
         }
     }
 
-    // =======================
+    // ===================================
     // 🔹 Buscar Todo
-    // =======================
+    // ===================================
     @FXML
     void BuscarTodo(ActionEvent event) {
         area1.clear();
@@ -251,9 +259,9 @@ public class ControladorFormulario {
         }
     }
 
-    // =======================
+    // ===================================
     // 🔹 Eliminar
-    // =======================
+    // ===================================
     @FXML
     void Eliminar(ActionEvent event) {
         area1.clear();
@@ -280,6 +288,16 @@ public class ControladorFormulario {
             area1.setText("Error al eliminar: " + e.getMessage());
             e.printStackTrace();
         }
+    }
+
+    // ===================================
+    // 🔹 Mostrar Arbol (Método de acción faltante para fx:id="arbol")
+    // ===================================
+    @FXML
+    void Arbol(ActionEvent event) {
+        // Aquí debes implementar la lógica que quieres para el botón "Mostrar Arbol".
+        // Por ejemplo, mostrar algo en area2:
+        area2.setText("El botón 'Mostrar Arbol' fue presionado. Implementa aquí la lógica de árbol.");
     }
 
 }
