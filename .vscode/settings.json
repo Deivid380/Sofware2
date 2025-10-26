@@ -1,3 +1,16 @@
 {
-    "java.configuration.updateBuildConfiguration": "interactive"
+  "java.home": "C:\\Program Files\\Java\\jdk-25",
+  "java.jdt.ls.java.home": "C:\\Program Files\\Java\\jdk-25",
+  "java.configuration.runtimes": [
+    {
+      "name": "JavaSE-25",
+      "path": "C:\\Program Files\\Java\\jdk-25",
+      "default": true
+    }
+  ],
+  "terminal.integrated.env.windows": {
+    "JAVA_HOME": "C:\\Program Files\\Java\\jdk-25",
+    "PATH": "C:\\Program Files\\Java\\jdk-25\\bin;C:\Program Files\Common Files\Oracle\Java\javapath;C:\Program Files (x86)\Common Files\Oracle\Java\javapath;C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;C:\WINDOWS\System32\WindowsPowerShell\v1.0\;C:\WINDOWS\System32\OpenSSH\;C:\Users\Deivid\Downloads\apache-maven-3.9.11-bin\apache-maven-3.9.11\bin;C:\Users\Deivid\AppData\Local\Microsoft\WindowsApps;C:\Users\Deivid\AppData\Local\Programs\Microsoft VS Code\bin;C:\Users\Deivid\AppData\Local\Programs\Git\cmd;c:\Users\Deivid\AppData\Roaming\Code\User\globalStorage\github.copilot-chat\debugCommand"
+  }
 }
+
