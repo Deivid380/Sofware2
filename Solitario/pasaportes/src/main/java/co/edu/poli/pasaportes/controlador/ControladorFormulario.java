@@ -8,6 +8,7 @@ import java.time.LocalDate;
 
 import co.edu.poli.pasaportes.modelo.*;
 import co.edu.poli.pasaportes.servicios.*;
+import co.edu.poli.pasaportes.vista.App;
 import co.edu.poli.pasaportes.repositorio.PasaporteRepo;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -35,6 +36,9 @@ public class ControladorFormulario {
 
     @FXML
     private Button eliminar;
+
+    @FXML
+    private Button command;
 
     @FXML
     private TextField txt1; // ID del pasaporte
@@ -299,5 +303,29 @@ public class ControladorFormulario {
         // Por ejemplo, mostrar algo en area2:
         area2.setText("El botón 'Mostrar Arbol' fue presionado. Implementa aquí la lógica de árbol.");
     }
+
+        private void cambiarVista(String vista) {
+        System.out.println("Intentando abrir la vista: " + vista);
+        try {
+            App.cambiarVista(vista);
+            System.out.println("Vista " + vista + " abierta correctamente.");
+        } catch (Exception e) {
+            e.printStackTrace();
+            mostrarAlerta("Error", "No se pudo abrir la vista de " + vista);
+        }
+    }
+
+    private void mostrarAlerta(String titulo, String mensaje) {
+        Alert alerta = new Alert(Alert.AlertType.INFORMATION);
+        alerta.setTitle(titulo);
+        alerta.setHeaderText(null);
+        alerta.setContentText(mensaje);
+        alerta.showAndWait();
+    }
+    @FXML
+    void con(ActionEvent event) {
+    cambiarVista("formularioCommand");
+    }
+
 
 }

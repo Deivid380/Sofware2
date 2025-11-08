@@ -35,5 +35,6 @@
       <TextArea fx:id="area1" layoutX="257.0" layoutY="28.0" prefHeight="126.0" prefWidth="414.0" />
       <Button fx:id="arbol" layoutX="436.0" layoutY="314.0" mnemonicParsing="false" onAction="#Arbol" prefHeight="32.0" prefWidth="90.0" text="Mostrar Arbol" />
       <TextArea fx:id="area2" layoutX="255.0" layoutY="174.0" prefHeight="126.0" prefWidth="414.0" />
+      <Button fx:id="command" layoutX="104.0" layoutY="217.0" mnemonicParsing="false" onAction="#con" text="Command" />
    </children>
 </AnchorPane>

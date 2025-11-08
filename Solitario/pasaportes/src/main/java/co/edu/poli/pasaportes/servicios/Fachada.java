@@ -7,12 +7,12 @@ import co.edu.poli.pasaportes.repositorio.PasaporteRepo;
 public class Fachada {
 
     private VerificacionID verifId;
-    private VerificacionANT verifAnti;
+    private VerificacionAntecedentes verifAnti;
     private GeneracionPasaporte generador;
 
     public Fachada(PasaporteRepo repo) {
         this.verifId = new VerificacionID(repo);
-        this.verifAnti = new VerificacionANT();
+        this.verifAnti = new VerificacionAntecedentes();
         this.generador = new GeneracionPasaporte(repo);
     }
 
