@@ -1,8 +1,8 @@
 package co.edu.poli.pasaportes.servicios;
 
-public class VerificacionANT {
+public class VerificacionAntecedentes {
 
-    public VerificacionANT() {}
+    public VerificacionAntecedentes() {}
 
     /**
      * Verificación dummy:
