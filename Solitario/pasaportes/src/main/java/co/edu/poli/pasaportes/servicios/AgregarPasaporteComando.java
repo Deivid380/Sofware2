@@ -16,4 +16,9 @@ public class AgregarPasaporteComando implements Comando {
     public void ejecutar() {
         servicio.agregarPasaporte(pasaporte);
     }
+
+    @Override
+    public void deshacer() {
+        servicio.eliminarPasaporte(pasaporte);
+    }
 }

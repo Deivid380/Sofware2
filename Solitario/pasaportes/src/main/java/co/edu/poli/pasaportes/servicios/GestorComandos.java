@@ -1,18 +1,24 @@
 package co.edu.poli.pasaportes.servicios;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Stack;
 
 public class GestorComandos {
 
-    private List<Comando> historial = new ArrayList<>();
+    private Stack<Comando> historial = new Stack<>();
 
     public void ejecutarComando(Comando comando) {
         comando.ejecutar();
-        historial.add(comando);
+        historial.push(comando);
     }
 
-    public List<Comando> getHistorial() {
-        return historial;
+    public boolean puedeDeshacer() {
+        return !historial.isEmpty();
+    }
+
+    public void deshacerUltimo() {
+        if (!historial.isEmpty()) {
+            Comando comando = historial.pop();
+            comando.deshacer();
+        }
     }
 }

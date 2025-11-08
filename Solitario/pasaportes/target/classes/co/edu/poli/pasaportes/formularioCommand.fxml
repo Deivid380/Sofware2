@@ -6,7 +6,6 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Text?>
 
-
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/24.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="co.edu.poli.pasaportes.controlador.ControladorCommand">
    <children>
       <Button fx:id="crear" layoutX="45.0" layoutY="273.0" mnemonicParsing="false" onAction="#Crear" text="CREAR" />
@@ -17,5 +16,6 @@
       <TextArea fx:id="info" layoutX="259.0" layoutY="31.0" prefHeight="307.0" prefWidth="326.0" />
       <Text layoutX="48.0" layoutY="91.0" strokeType="OUTSIDE" strokeWidth="0.0" text="NOMBRE" wrappingWidth="52.0" />
       <Text layoutX="48.0" layoutY="160.0" strokeType="OUTSIDE" strokeWidth="0.0" text="ID" />
+      <Button fx:id="deshacer" layoutX="407.0" layoutY="347.0" mnemonicParsing="false" onAction="#Deshacer" text="DESHACER" />
    </children>
 </AnchorPane>

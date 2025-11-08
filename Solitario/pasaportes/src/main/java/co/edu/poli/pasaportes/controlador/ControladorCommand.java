@@ -28,6 +28,9 @@ public class ControladorCommand {
     @FXML
     private TextField nombre;
 
+    @FXML 
+    private Button deshacer;
+
     // Adaptador y gestor
     private PasaporteServiceAdapter adapter = new PasaporteServiceAdapter();
     private GestorComandos gestor = new GestorComandos();
@@ -98,4 +101,14 @@ public class ControladorCommand {
 
         info.setText(sb.toString());
     }
+
+    @FXML
+    void Deshacer(ActionEvent event) {
+    if (gestor.puedeDeshacer()) {
+        gestor.deshacerUltimo();
+        info.setText("Última acción revertida con éxito.");
+    } else {
+        info.setText("No hay acciones para deshacer.");
+    }
+}
 }
