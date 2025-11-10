@@ -49,6 +49,9 @@ public class ControladorFormulario {
     private Button estra;
 
     @FXML
+    private Button chainResp;
+
+    @FXML
     private TextField txt1;
 
     @FXML
@@ -351,4 +354,20 @@ public class ControladorFormulario {
         }
     }
 
+    @FXML
+    void chain(ActionEvent event) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/co/edu/poli/pasaportes/vista/ChainOfResponsibility.fxml"));
+            Parent root = loader.load();
+    
+            Stage chainStage = new Stage();
+            chainStage.setTitle("Patrón Chain of Responsibility");
+            chainStage.setScene(new Scene(root));
+            chainStage.initModality(Modality.APPLICATION_MODAL);
+            chainStage.showAndWait();
+        } catch (IOException e) {
+            e.printStackTrace();
+            mostrarAlerta("Error", "No se pudo abrir la vista de Chain of Responsibility.");
+        }
+    }
 }

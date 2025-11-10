@@ -37,5 +37,6 @@
       <TextArea fx:id="area2" layoutX="255.0" layoutY="174.0" prefHeight="126.0" prefWidth="414.0" />
       <Button fx:id="command" layoutX="100.0" layoutY="202.0" mnemonicParsing="false" onAction="#con" text="Command" />
       <Button fx:id="estra" layoutX="97.0" layoutY="242.0" mnemonicParsing="false" onAction="#Estrate" prefHeight="32.0" prefWidth="71.0" text="Strategy" />
+      <Button fx:id="chainResp" layoutX="90.0" layoutY="280.0" mnemonicParsing="false" onAction="#chain" prefHeight="32.0" prefWidth="150.0" text="Chain of Responsibility" />
    </children>
 </AnchorPane>

@@ -10,5 +10,6 @@ module co.edu.poli.pasaportes {
     exports co.edu.poli.pasaportes.controlador;
 
     opens co.edu.poli.pasaportes.controlador to javafx.fxml;
+    opens co.edu.poli.pasaportes.vista to javafx.fxml;
+    opens co.edu.poli.pasaportes to javafx.fxml;
 }
-

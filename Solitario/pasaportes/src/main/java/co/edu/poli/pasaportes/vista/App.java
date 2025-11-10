@@ -21,14 +21,17 @@ public class App extends Application {
     }
 
     public static void cambiarVista(String fxml) {
-        try {
-            FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource("/co/edu/poli/pasaportes/" + fxml + ".fxml"));
-            Parent root = fxmlLoader.load();
-            primaryStage.setScene(new Scene(root));
-            primaryStage.centerOnScreen();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+         try {
+             String fxmlPath = "/co/edu/poli/pasaportes/" + fxml + ".fxml";
+             FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource(fxmlPath));
+
+             Parent root = fxmlLoader.load();
+
+             primaryStage.setScene(new Scene(root));
+             primaryStage.centerOnScreen();
+         } catch (IOException e) {
+             e.printStackTrace();
+         }
     }
 
     public static void main(String[] args) {
