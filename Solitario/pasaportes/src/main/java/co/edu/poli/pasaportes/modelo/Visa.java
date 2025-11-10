@@ -1,8 +1,7 @@
 package co.edu.poli.pasaportes.modelo;
 
 
-import java.io.*;
-import java.util.*;
+
 
 /**
  * 

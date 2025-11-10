@@ -22,4 +22,8 @@ public class AdapterPasaporte implements ServiceInterface {
             System.out.println("Pasaporte no encontrado.");
         }
     }
+
+    public Pasaporte getPasaporte() {
+        return this.pasaporte;
+    }
 }

@@ -14,12 +14,12 @@ public class PasaporteRepo implements Repository<Pasaporte, String> {
         return Singleton.getInstance().conectar();
     }
 
-    // 🔹 Normaliza cadenas (quitar tildes y pasar a minúsculas)
     private String normalizarTipo(String tipo) {
-        if (tipo == null) return null;
+        if (tipo == null)
+            return null;
         return Normalizer.normalize(tipo, Normalizer.Form.NFD)
-                         .replaceAll("\\p{M}", "")
-                         .toLowerCase();
+                .replaceAll("\\p{M}", "")
+                .toLowerCase();
     }
 
     private String getTableName(String tipoPasaporte) {
@@ -36,8 +36,10 @@ public class PasaporteRepo implements Repository<Pasaporte, String> {
     private String seguridadPorTipo(String tipoPasaporte) {
         String tipo = normalizarTipo(tipoPasaporte);
 
-        if ("ordinario".equals(tipo)) return "Chip";
-        if ("diplomatico".equals(tipo)) return "Biometrica";
+        if ("ordinario".equals(tipo))
+            return "Chip";
+        if ("diplomatico".equals(tipo))
+            return "Biometrica";
         return "N/A";
     }
 
@@ -87,11 +89,11 @@ public class PasaporteRepo implements Repository<Pasaporte, String> {
         String tableName = getTableName(tipoPasaporte);
 
         String sql = "SELECT p.id, p.titular, p.pais_codigo, p.fecha_exp " +
-                     "FROM public." + tableName + " p " +
-                     "WHERE p.id = ?";
+                "FROM public." + tableName + " p " +
+                "WHERE p.id = ?";
 
         try (Connection conn = conectar();
-             PreparedStatement ps = conn.prepareStatement(sql)) {
+                PreparedStatement ps = conn.prepareStatement(sql)) {
 
             ps.setString(1, idPasaporte);
             ResultSet rs = ps.executeQuery();
@@ -107,16 +109,14 @@ public class PasaporteRepo implements Repository<Pasaporte, String> {
                             rs.getString("fecha_exp"),
                             titular,
                             pais,
-                            null
-                    );
+                            null);
                 } else {
                     return new PasaporteDiplomatico(
                             rs.getString("id"),
                             rs.getString("fecha_exp"),
                             titular,
                             pais,
-                            null
-                    );
+                            null);
                 }
             }
         } catch (SQLException e) {
@@ -205,11 +205,11 @@ public class PasaporteRepo implements Repository<Pasaporte, String> {
         List<Pasaporte> pasaportes = new ArrayList<>();
 
         String sql = "SELECT p.id, p.titular, p.pais_codigo, p.fecha_exp, p.tipo_pass " +
-                     "FROM public.pasaporte_base p";
+                "FROM public.pasaporte_base p";
 
         try (Connection conn = conectar();
-             PreparedStatement ps = conn.prepareStatement(sql);
-             ResultSet rs = ps.executeQuery()) {
+                PreparedStatement ps = conn.prepareStatement(sql);
+                ResultSet rs = ps.executeQuery()) {
 
             while (rs.next()) {
                 Titular titular = new Titular(rs.getString("titular"), "Desconocido", null);
@@ -222,16 +222,14 @@ public class PasaporteRepo implements Repository<Pasaporte, String> {
                             rs.getString("fecha_exp"),
                             titular,
                             pais,
-                            null
-                    ));
+                            null));
                 } else if ("diplomatico".equals(tipo)) {
                     pasaportes.add(new PasaporteDiplomatico(
                             rs.getString("id"),
                             rs.getString("fecha_exp"),
                             titular,
                             pais,
-                            null
-                    ));
+                            null));
                 }
             }
 

@@ -1,6 +1,6 @@
 package co.edu.poli.pasaportes.servicios;
 
-import co.edu.poli.pasaportes.modelo.*;
+
 import co.edu.poli.pasaportes.repositorio.PasaporteRepo;
 
 

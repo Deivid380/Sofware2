@@ -31,10 +31,11 @@
          </font></Button>
       <TextField fx:id="txt1" layoutX="42.0" layoutY="66.0" prefHeight="44.0" prefWidth="182.0" text="ID" />
       <TextField fx:id="txt2" layoutX="45.0" layoutY="135.0" prefHeight="44.0" prefWidth="182.0" text="Nombre" />
-      <ComboBox fx:id="combo1" layoutX="42.0" layoutY="270.0" prefHeight="44.0" prefWidth="175.0" promptText="Tipo" />
+      <ComboBox fx:id="combo1" layoutX="42.0" layoutY="308.0" prefHeight="44.0" prefWidth="175.0" promptText="Tipo" />
       <TextArea fx:id="area1" layoutX="257.0" layoutY="28.0" prefHeight="126.0" prefWidth="414.0" />
       <Button fx:id="arbol" layoutX="436.0" layoutY="314.0" mnemonicParsing="false" onAction="#Arbol" prefHeight="32.0" prefWidth="90.0" text="Mostrar Arbol" />
       <TextArea fx:id="area2" layoutX="255.0" layoutY="174.0" prefHeight="126.0" prefWidth="414.0" />
-      <Button fx:id="command" layoutX="104.0" layoutY="217.0" mnemonicParsing="false" onAction="#con" text="Command" />
+      <Button fx:id="command" layoutX="100.0" layoutY="202.0" mnemonicParsing="false" onAction="#con" text="Command" />
+      <Button fx:id="estra" layoutX="97.0" layoutY="242.0" mnemonicParsing="false" onAction="#Estrate" prefHeight="32.0" prefWidth="71.0" text="Strategy" />
    </children>
 </AnchorPane>

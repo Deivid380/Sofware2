@@ -1,18 +1,23 @@
 package co.edu.poli.pasaportes.controlador;
 
+import java.io.IOException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.text.Normalizer;
 import java.time.LocalDate;
-
 import co.edu.poli.pasaportes.modelo.*;
 import co.edu.poli.pasaportes.servicios.*;
 import co.edu.poli.pasaportes.vista.App;
 import co.edu.poli.pasaportes.repositorio.PasaporteRepo;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
 
 public class ControladorFormulario {
 
@@ -41,38 +46,35 @@ public class ControladorFormulario {
     private Button command;
 
     @FXML
-    private TextField txt1; // ID del pasaporte
+    private Button estra;
 
     @FXML
-    private TextField txt2; // Nombre del titular
-
-    // ===================================
-    // 🔹 CAMPOS FALTANTES AGREGADOS
-    // ===================================
-    @FXML
-    private TextArea area2; // Corresponde al fx:id="area2" en el FXML
+    private TextField txt1;
 
     @FXML
-    private Button arbol;  // Corresponde al fx:id="arbol" en el FXML
-    
-    // ===================================
-    // 🔹 Normalizar tipo
-    // ===================================
+    private TextField txt2;
+
+    @FXML
+    private TextArea area2;
+
+    @FXML
+    private Button arbol;
+
     private String normalizarTipo(String tipoUI) {
-        if (tipoUI == null) return null;
+        if (tipoUI == null)
+            return null;
 
         String normalizado = Normalizer.normalize(tipoUI, Normalizer.Form.NFD)
-                                    .replaceAll("\\p{M}", "") // elimina tildes
-                                    .toLowerCase();
+                .replaceAll("\\p{M}", "") // elimina tildes
+                .toLowerCase();
 
-        if (normalizado.equals("diplomatico")) return "Diplomático";
-        if (normalizado.equals("ordinario")) return "Ordinario";
+        if (normalizado.equals("diplomatico"))
+            return "Diplomático";
+        if (normalizado.equals("ordinario"))
+            return "Ordinario";
         return null;
     }
 
-    // ===================================
-    // 🔹 Inicializar ComboBox
-    // ===================================
     @FXML
     private void initialize() {
         combo1.getItems().setAll("Ordinario", "Diplomático");
@@ -81,15 +83,14 @@ public class ControladorFormulario {
     private String resolverTipoPorId(String id) throws SQLException {
         PasaporteRepo repo = new PasaporteRepo();
         Pasaporte p = repo.read(id, "Ordinario");
-        if (p != null) return "Ordinario";
+        if (p != null)
+            return "Ordinario";
         p = repo.read(id, "Diplomático");
-        if (p != null) return "Diplomático";
+        if (p != null)
+            return "Diplomático";
         return null;
     }
 
-    // ===================================
-    // 🔹 Actualizar Titular
-    // ===================================
     private String actualizarNombreTitular(String titularId, String nuevoNombre) {
         try {
             Connection conn = Singleton.getInstance().conectar();
@@ -106,9 +107,6 @@ public class ControladorFormulario {
         }
     }
 
-    // ===================================
-    // 🔹 Crear
-    // ===================================
     @FXML
     void Crear(ActionEvent event) {
         area1.clear();
@@ -144,19 +142,16 @@ public class ControladorFormulario {
             String mensaje = repo.create(pasaporte, tipoBD);
 
             area1.setText("Pasaporte creado\n" +
-                          "Tipo: " + tipoBD +
-                          "\nID: " + pasaporte.getId() +
-                          "\nTitular: " + titular.getNombre() +
-                          "\nResultado BD: " + mensaje);
+                    "Tipo: " + tipoBD +
+                    "\nID: " + pasaporte.getId() +
+                    "\nTitular: " + titular.getNombre() +
+                    "\nResultado BD: " + mensaje);
         } catch (Exception e) {
             area1.setText("Error: " + e.getMessage());
             e.printStackTrace();
         }
     }
 
-    // ===================================
-    // 🔹 Actualizar
-    // ===================================
     @FXML
     void Actualizar(ActionEvent event) {
         area1.clear();
@@ -192,9 +187,6 @@ public class ControladorFormulario {
         }
     }
 
-    // ===================================
-    // 🔹 Buscar
-    // ===================================
     @FXML
     void Buscar(ActionEvent event) {
         area1.clear();
@@ -217,13 +209,12 @@ public class ControladorFormulario {
             Pasaporte p = repo.read(id, tipo);
             if (p != null) {
                 area1.setText(
-                    "Pasaporte encontrado\n" +
-                    "Tipo: " + tipo + "\n" +
-                    "ID: " + p.getId() + "\n" +
-                    "Titular: " + p.getTitular().getNombre() + "\n" +
-                    "Nacionalidad: " + p.getTitular().getNacionalidad() + "\n" +
-                    "Fecha Exp: " + p.getFechaExp()
-                );
+                        "Pasaporte encontrado\n" +
+                                "Tipo: " + tipo + "\n" +
+                                "ID: " + p.getId() + "\n" +
+                                "Titular: " + p.getTitular().getNombre() + "\n" +
+                                "Nacionalidad: " + p.getTitular().getNacionalidad() + "\n" +
+                                "Fecha Exp: " + p.getFechaExp());
             } else {
                 area1.setText("No existe un pasaporte con ID " + id + ".");
             }
@@ -233,9 +224,6 @@ public class ControladorFormulario {
         }
     }
 
-    // ===================================
-    // 🔹 Buscar Todo
-    // ===================================
     @FXML
     void BuscarTodo(ActionEvent event) {
         area1.clear();
@@ -252,9 +240,9 @@ public class ControladorFormulario {
             StringBuilder sb = new StringBuilder("Lista de pasaportes\n");
             for (Pasaporte p : lista) {
                 sb.append(p.getId()).append(" | ")
-                  .append(p.getTitular().getNombre()).append(" | ")
-                  .append(p.getTitular().getNacionalidad()).append(" | ")
-                  .append(p.getFechaExp()).append("\n");
+                        .append(p.getTitular().getNombre()).append(" | ")
+                        .append(p.getTitular().getNacionalidad()).append(" | ")
+                        .append(p.getFechaExp()).append("\n");
             }
             area1.setText(sb.toString());
         } catch (Exception e) {
@@ -263,9 +251,6 @@ public class ControladorFormulario {
         }
     }
 
-    // ===================================
-    // 🔹 Eliminar
-    // ===================================
     @FXML
     void Eliminar(ActionEvent event) {
         area1.clear();
@@ -294,17 +279,13 @@ public class ControladorFormulario {
         }
     }
 
-    // ===================================
-    // 🔹 Mostrar Arbol (Método de acción faltante para fx:id="arbol")
-    // ===================================
     @FXML
     void Arbol(ActionEvent event) {
-        // Aquí debes implementar la lógica que quieres para el botón "Mostrar Arbol".
-        // Por ejemplo, mostrar algo en area2:
+
         area2.setText("El botón 'Mostrar Arbol' fue presionado. Implementa aquí la lógica de árbol.");
     }
 
-        private void cambiarVista(String vista) {
+    private void cambiarVista(String vista) {
         System.out.println("Intentando abrir la vista: " + vista);
         try {
             App.cambiarVista(vista);
@@ -322,10 +303,51 @@ public class ControladorFormulario {
         alerta.setContentText(mensaje);
         alerta.showAndWait();
     }
+
     @FXML
     void con(ActionEvent event) {
-    cambiarVista("formularioCommand");
+        cambiarVista("formularioCommand");
     }
 
+    @FXML
+    void Estrate(ActionEvent event) {
+        try {
+
+            Titular titularDemo = new Titular("10203040", "Laura Martínez", "Colombiana");
+
+            Pais paisDemo = new Pais("COL", "Colombia");
+
+            ElementoSeguridad seguridadDemo = new Chip();
+
+            String idPasaporte = "ID-DEMO-2025";
+            String fechaExp = "2025-11-10";
+
+            Pasaporte pasaportePrueba = new PasaporteOrdinario(
+                    idPasaporte,
+                    fechaExp,
+                    titularDemo,
+                    paisDemo,
+                    seguridadDemo);
+
+            AdapterPasaporte adaptadorParaDemo = new AdapterPasaporte(pasaportePrueba);
+
+            // Código en ControladorFormulario.java:
+            FXMLLoader loader = new FXMLLoader(ControladorStrategy.class.getResource("/co/edu/poli/pasaportes/vista/StrategyDemo.fxml"));
+            Parent root = loader.load();
+
+            ControladorStrategy controladorDemo = loader.getController();
+            controladorDemo.initData(adaptadorParaDemo);
+
+            Stage strategyStage = new Stage();
+            strategyStage.setTitle("Patrón Strategy");
+            strategyStage.setScene(new Scene(root));
+            strategyStage.initModality(Modality.APPLICATION_MODAL);
+            strategyStage.showAndWait();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+
+        }
+    }
 
 }
