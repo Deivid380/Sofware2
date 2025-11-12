@@ -9,34 +9,35 @@
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="484.0" prefWidth="697.0" xmlns="http://javafx.com/javafx/24.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="co.edu.poli.pasaportes.controlador.ControladorFormulario">
    <children>
-      <Button fx:id="crear" layoutX="67.0" layoutY="377.0" mnemonicParsing="false" onAction="#Crear" prefHeight="56.0" prefWidth="91.0" text="Crear">
+      <Button fx:id="crear" layoutX="45.0" layoutY="405.0" mnemonicParsing="false" onAction="#Crear" prefHeight="56.0" prefWidth="91.0" text="Crear">
          <font>
             <Font size="14.0" />
          </font></Button>
-      <Button fx:id="actualizar" layoutX="178.0" layoutY="377.0" mnemonicParsing="false" onAction="#Actualizar" prefHeight="56.0" prefWidth="91.0" text="Actualizar">
+      <Button fx:id="actualizar" layoutX="165.0" layoutY="405.0" mnemonicParsing="false" onAction="#Actualizar" prefHeight="56.0" prefWidth="91.0" text="Actualizar">
          <font>
             <Font size="14.0" />
          </font></Button>
-      <Button fx:id="buscar" layoutX="281.0" layoutY="377.0" mnemonicParsing="false" onAction="#Buscar" prefHeight="56.0" prefWidth="91.0" text="Buscar">
+      <Button fx:id="buscar" layoutX="291.0" layoutY="405.0" mnemonicParsing="false" onAction="#Buscar" prefHeight="56.0" prefWidth="91.0" text="Buscar">
          <font>
             <Font size="14.0" />
          </font></Button>
-      <Button fx:id="eliminar" layoutX="388.0" layoutY="377.0" mnemonicParsing="false" onAction="#Eliminar" prefHeight="56.0" prefWidth="91.0" text="Eliminar">
+      <Button fx:id="eliminar" layoutX="407.0" layoutY="405.0" mnemonicParsing="false" onAction="#Eliminar" prefHeight="56.0" prefWidth="91.0" text="Eliminar">
          <font>
             <Font size="14.0" />
          </font></Button>
-      <Button fx:id="buscarTodo" layoutX="494.0" layoutY="377.0" mnemonicParsing="false" onAction="#BuscarTodo" prefHeight="56.0" prefWidth="91.0" text="Leer Todo">
+      <Button fx:id="buscarTodo" layoutX="526.0" layoutY="405.0" mnemonicParsing="false" onAction="#BuscarTodo" prefHeight="56.0" prefWidth="91.0" text="Leer Todo">
          <font>
             <Font size="14.0" />
          </font></Button>
       <TextField fx:id="txt1" layoutX="42.0" layoutY="66.0" prefHeight="44.0" prefWidth="182.0" text="ID" />
       <TextField fx:id="txt2" layoutX="45.0" layoutY="135.0" prefHeight="44.0" prefWidth="182.0" text="Nombre" />
-      <ComboBox fx:id="combo1" layoutX="42.0" layoutY="308.0" prefHeight="44.0" prefWidth="175.0" promptText="Tipo" />
+      <ComboBox fx:id="combo1" layoutX="320.0" layoutY="324.0" prefHeight="44.0" prefWidth="175.0" promptText="Tipo" />
       <TextArea fx:id="area1" layoutX="257.0" layoutY="28.0" prefHeight="126.0" prefWidth="414.0" />
-      <Button fx:id="arbol" layoutX="436.0" layoutY="314.0" mnemonicParsing="false" onAction="#Arbol" prefHeight="32.0" prefWidth="90.0" text="Mostrar Arbol" />
+      <Button fx:id="arbol" layoutX="527.0" layoutY="330.0" mnemonicParsing="false" onAction="#Arbol" prefHeight="32.0" prefWidth="90.0" text="Mostrar Arbol" />
       <TextArea fx:id="area2" layoutX="255.0" layoutY="174.0" prefHeight="126.0" prefWidth="414.0" />
-      <Button fx:id="command" layoutX="100.0" layoutY="202.0" mnemonicParsing="false" onAction="#con" text="Command" />
-      <Button fx:id="estra" layoutX="97.0" layoutY="242.0" mnemonicParsing="false" onAction="#Estrate" prefHeight="32.0" prefWidth="71.0" text="Strategy" />
-      <Button fx:id="chainResp" layoutX="90.0" layoutY="280.0" mnemonicParsing="false" onAction="#chain" prefHeight="32.0" prefWidth="150.0" text="Chain of Responsibility" />
+      <Button fx:id="command" layoutX="42.0" layoutY="255.0" mnemonicParsing="false" onAction="#con" text="Command" />
+      <Button fx:id="estra" layoutX="42.0" layoutY="300.0" mnemonicParsing="false" onAction="#Estrate" prefHeight="32.0" prefWidth="71.0" text="Strategy" />
+      <Button fx:id="chainResp" layoutX="42.0" layoutY="346.0" mnemonicParsing="false" onAction="#chain" prefHeight="32.0" prefWidth="150.0" text="Chain of Responsibility" />
+      <Button fx:id="activi" layoutX="87.0" layoutY="212.0" mnemonicParsing="false" onAction="#Activi" text="ACTIVIDAD 12" />
    </children>
 </AnchorPane>

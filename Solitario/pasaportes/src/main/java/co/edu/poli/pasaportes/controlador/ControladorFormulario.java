@@ -63,6 +63,9 @@ public class ControladorFormulario {
     @FXML
     private Button arbol;
 
+    @FXML
+    private Button activi;
+
     private String normalizarTipo(String tipoUI) {
         if (tipoUI == null)
             return null;
@@ -310,6 +313,11 @@ public class ControladorFormulario {
     @FXML
     void con(ActionEvent event) {
         cambiarVista("formularioCommand");
+    }
+
+    @FXML
+    void Activi(ActionEvent event) {
+        cambiarVista("formularioActividad");
     }
 
     @FXML
