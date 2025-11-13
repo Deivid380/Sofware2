@@ -35,12 +35,12 @@ public class ControladorActividad {
 
     @FXML
     void Mediator(ActionEvent event) {
-
+        cambiarVista("formularioMediator");
     }
 
     @FXML
     void State(ActionEvent event) {
-
+        cambiarVista("formularioState");
     }
 
 }
